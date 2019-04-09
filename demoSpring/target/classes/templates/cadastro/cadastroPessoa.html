@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+
+</head>
+<body>
+	<div class="container">
+		<h1>Treinando...</h1>
+		<br>
+			<div th:each="m: ${msg}"> 
+			<span th:text="${m}"></span>
+			</div>
+		<br>
+		<form action="salvarPessoa" method="post" th:object="${pessoaObj}">
+			<label>ID</label> <input name="id" th:field="*{id}"
+				readonly="readonly"> <label>Nome</label> <input name="nome"
+				th:field="*{nome}"> <label>Sobrenome</label> <input
+				name="sobrenome" th:field="*{sobrenome}"> 
+				<div class="row">
+				<input type="submit" value="Salvar" class="waves-effect waves-light btn ">
+				<a href="/listaPessoas" class="waves-effect waves-light btn  green lighten-2"> Listar Pessoas</a> 
+				</div>
+		</form>
+
+		
+		<br>
+		<h4>Lista de registros cadastrados</h4>
+		<form action="pesquisarPessoa" method="post">
+			<img src="https://img.icons8.com/material/24/000000/search-in-list.png">
+			<label>Pesquisar por nome:</label> <input name="nomePesquisa">
+			<input type="submit" value="Buscar"
+				class="waves-effect waves-light blue btn ">
+		</form>
+		<br> <br>
+
+		<table>
+			<tr th:each="pessoa : ${pessoas}">
+				<td th:text="${pessoa.id}"></td>
+				<td><a th:href="@{/telefones/{idPessoa}(idPessoa=${pessoa.id})}"> 
+				<span th:text="${pessoa.nome}"> </span>
+				</a></td>
+				<td th:text="${pessoa.sobrenome}"></td>
+				<td><a
+					th:href="@{/editarPessoa/{idPessoa}(idPessoa=${pessoa.id})}">Editar</a></td>
+				<td><a
+					th:href="@{/removerPessoa/{idPessoa}(idPessoa=${pessoa.id})}">Excluir</a></td>
+			</tr>
+		</table>
+	</div>
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+</body>
+</html>

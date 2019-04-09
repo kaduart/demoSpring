@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+
+</head>
+<body>
+	<div class="container">
+		<h1>Cadastro de pessoas</h1>
+		<hr>
+		<a href="/cadastroPessoa" class="waves-effect waves-light orange btn ">Voltar a tela de cadastro</a>
+		<hr>
+		<h3>Informações de cadastro</h3>
+		<div th:each="p: ${pessoaObj}">
+			<div class="row">
+				<p>
+					ID: <span th:text="${p.id}"></span>
+				</p>
+				<p>
+					Nome: <span th:text="${p.nome}"></span>
+				</p>
+				<p>
+					Sobrenome: <span th:text="${p.sobrenome}"></span>
+				</p>
+			</div>
+		</div>
+
+		<h5>Telefones</h5>
+		<div class="row">
+			<form
+				th:action="@{/addFonePessoa/{pessoaId}(pessoaId=${pessoaObj.id})}"
+				method="post" class="col s12">
+				<div class="row">
+					<div class="input-field col s6">
+						<label class="active" for="numero">Número:</label> <input
+							id="numero" name="numero" class="validate">
+					</div>
+
+					<div class="input-field col s6">
+						<label class="active" for="tipo">Tipo:</label> <input id="tipo"
+							name="tipo" class="validate">
+					</div>
+
+					<input type="submit" value="Adicionar Telefone"
+						class="waves-effect waves-light btn ">
+				</div>
+			</form>
+		</div>
+		<table>
+			<tr th:each="fone: ${telefones}">
+				<td th:text="${fone.numero}"></td>
+				<td th:text="${fone.tipo}"></td>
+				<td><a th:href="@{/removerFone/{idTelefone}(idTelefone=${fone.id})}">Excluir</a></td>
+			</tr>
+			
+		</table>
+	</div>
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+</body>
+</html>
